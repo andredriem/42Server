@@ -1,3 +1,5 @@
+import MySQL
+
 class MenuManagerBD:
 
 	def createMenu():
@@ -51,7 +53,11 @@ class MenuManagerBD:
 			getMenu()
 		else: print "deu ruim :/"
 
-			
+
+
+
+import sqlite3
+conn = sqlite3.connect('example.db')
 
 
 
@@ -62,11 +68,3 @@ class MenuManagerBD:
 
 
 
-
-
-
-
-
-
-
-	
