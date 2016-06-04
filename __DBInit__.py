@@ -8,7 +8,7 @@ c = conn.cursor()
 ##INICIA ESTRUTUR DE DADOS MENU: Contem dados de todos os pratos
 
 
-c.execute("""CREATE TABLE menu(name varchar primary key,
+c.execute("""CREATE TABLE menu(dish_name varchar primary key,
 			       description varchar,
 			       gluten integer,
 			       vegan integer,
@@ -24,8 +24,8 @@ c.execute("""INSERT INTO menu VALUES ('hamburger','uma pizza hmmm...',1,0,0,1,'p
 
 ##INICIA ESTRUTURA DE DADOS PEDIDO: Contem ID de Pedido e Status
 
-c.execute("""CREATE TABLE restaurantOrder(id integer primary key,
-                                table_number integer,
+c.execute("""CREATE TABLE restaurantOrder(order_id integer primary key,
+                                tableNo integer,
                                 status varchar
                                 )""")
 
@@ -37,16 +37,16 @@ c.execute("""INSERT INTO restaurantOrder VALUES (0,1,'solicitado')""")
 ##INICIA ESTRUTURA DE DADOS PRATOS-PEDIDOS: RELACIONA PRATO COM PEDIDO
 
 c.execute("""CREATE TABLE orderedDishes(
+          order_id integer primary key REFERENCES restaurantOrder(order_id),
+          dish_name varchar primary key REFERENCES menu(dish_name)
           quantity integer,
-          halfportion integer,
-          order_id integer REFERENCES restaurantOrder(id),
-          dish_name varchar REFERENCES menu(name)
+          halfportion integer
           )""")
 
 
 #exemplos / dados iniciais
-c.execute("""INSERT INTO orderedDishes VALUES (2,0,0,'pizza')""")
-c.execute("""INSERT INTO orderedDishes VALUES (2,1,0,'hamburger')""")
+c.execute("""INSERT INTO orderedDishes VALUES (0,'pizza',2,0)""")
+c.execute("""INSERT INTO orderedDishes VALUES (0,'hamburger',2,1)""")
 
 
 
