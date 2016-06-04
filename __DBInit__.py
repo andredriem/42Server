@@ -8,9 +8,9 @@ c = conn.cursor()
 ##INICIA ESTRUTUR DE DADOS MENU: Contem dados de todos os pratos
 
 
-c.execute("""CREATE TABLE menu(name varchar unique primary key,
+c.execute("""CREATE TABLE menu(name varchar primary key,
 			       description varchar,
-			       glutem integer,
+			       gluten integer,
 			       vegan integer,
 			       vegetarian integer,
 			       lactose integer,
