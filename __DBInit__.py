@@ -37,8 +37,8 @@ c.execute("""INSERT INTO restaurantOrder VALUES (0,1,'solicitado')""")
 ##INICIA ESTRUTURA DE DADOS PRATOS-PEDIDOS: RELACIONA PRATO COM PEDIDO
 
 c.execute("""CREATE TABLE orderedDishes(
-          order_id integer primary key REFERENCES restaurantOrder(order_id),
-          dish_name varchar primary key REFERENCES menu(dish_name)
+          PRIMARY KEY (order_id integer REFERENCES restaurantOrder(order_id),
+          dish_name varchar REFERENCES menu(dish_name)),
           quantity integer,
           halfportion integer
           )""")
