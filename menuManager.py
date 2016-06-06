@@ -1,63 +1,44 @@
-import MySQL
+import sqlite3	
 
-class MenuManagerBD:
+conn = sqlite3.connect('exemple.db')
+c = conn.cursor()
 
-	def createMenu():
-		# Create SQL
-		#cur.execute('CREATE DATABASE ;')
-		# Create columns
-		cursor.execute ("""
-			 CREATE TABLE Menu
-			 (
-			 name CHAR(150),
-			 price FLOAT,
-			 tag CHAR(250),
-			 description CHAR(600),
-			 soyUse INT,
-			 lactoUse INT,
-			 glutUse INT,
-			 )
-			 """)
+def getMenu():
+# fetch 'em all
+	rows = c.execute ("SELECT * FROM Menu")
+	return_string = "{"
+	for row in rows:
+		return_string = return_string + str(row) + ","
+	return_string = return_string[:-1] + '}'
+	if '{' not in return_string:
+		return_string = '{' + return_string 
+	conn.commit()
+	return return_string   
+		 
 
-	def getMenu():
-	# fetch 'em all
-		cursor.execute ("SELECT * FROM Menu")
-		rows = cursor.fetchall()
-		for row in rows:
-			print "%s, %s" % (row[0], row[1])
-		print "%d rows were returned" % cursor.rowcount 
-			 
-	def printMenuNames():
-		# for testing proposed ONLY
-		for row in cur.fetchall():
-			print row[0]
 
-	def insertPlate(name, price, tag, description, soyUse, lactoUse, glutUse):
-		cursor.execute("INSERT INTO table VALUES (%s, %s, %s, %s, %d, %d, %d)", 
-		(name, price, tag, description, soyUse, lactoUse, glutUse)
+def insertPlate(dish_name, description, gluten, vegan, vegetarian, lactose, 
+							type_, discount,price):
+	row = c.execute("""INSERT INTO menu VALUES('%s','%s',%d,%d,%d,%d,'%s',%f,%f)"""
+		  %(dish_name, description, gluten, vegan, vegetarian, lactose,
+							 type_, discount,price))
+	conn.commit()
+	pass
 
-	def idFunction(inputString):
-		partString = inputString.split('@')
-		funcCall = partString[0]
-		paramFull = partString[1].split('𝛀')
-		if(funcCall == "insertPlate"):
-			name = paramFull[0]
-			price = paramFull[1]
-			tag = paramFull[2]
-			description = paramFull[3]
-			soyUse = paramFull[4]
-			lactoUse = paramFull[5]
-			glutUse = paramFull[6]
-			insertPlate(name, price, tag, description, soyUse, lactoUse, glutUse)
-		if(funcCall == "getMenu"):
-			getMenu()
-		else: print "deu ruim :/"
+def deletePlate(dish_name):
+	row = c.execute("""DELETE FROM menu WHERE '%s'==dish_name"""
+		  %(dish_name))
+	conn.commit()
+	pass
 
 
 
 
-import sqlite3
-conn = sqlite3.connect('example.db')
+
+#insertPlate('pintoBunda','dick2butt',1,1,1,1,'butt+dick',0.5,55.99)
+print getMenu()
+deletePlate('hamburger')
+print getMenu()
 
 
 

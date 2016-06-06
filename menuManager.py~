@@ -1,29 +1,44 @@
-import MySQLdb
+import sqlite3	
+
+conn = sqlite3.connect('exemple.db')
+c = conn.cursor()
+
+def getMenu():
+# fetch 'em all
+	rows = c.execute ("SELECT * FROM Menu")
+	return_string = "{"
+	for row in rows:
+		return_string = return_string + str(row) + ","
+	return_string = return_string[:-1] + '}'
+	if '{' not int return_string:
+		return_string = '{' + return_string 
+	conn.commit()
+	return return_string   
+		 
+
+
+def insertPlate(dish_name, description, gluten, vegan, vegetarian, lactose, 
+							type_, discount,price):
+	row = c.execute("""INSERT INTO menu VALUES('%s','%s',%d,%d,%d,%d,'%s',%f,%f)"""
+		  %(dish_name, description, gluten, vegan, vegetarian, lactose,
+							 type_, discount,price))
+	conn.commit()
+	pass
+
+def deletePlate(dish_name):
+	row = c.execute("""DELETE FROM menu WHERE '%s'==dish_name"""
+		  %(dish_name))
+	conn.commit()
+	pass
 
 
 
 
-# Open database connection
-db = MySQLdb.connect("localhost","testuser","test123","TESTDB" )
 
-# prepare a cursor object using cursor() method
-cursor = db.cursor()
-
-# Drop table if it already exist using execute() method.
-cursor.execute("DROP TABLE IF EXISTS EMPLOYEE")
-
-# Create table as per requirement
-sql = """CREATE TABLE EMPLOYEE (
-         FIRST_NAME  CHAR(20) NOT NULL,
-         LAST_NAME  CHAR(20),
-         AGE INT,  
-         SEX CHAR(1),
-         INCOME FLOAT )"""
-
-cursor.execute(sql)
-
-# disconnect from server
-db.close()
+#insertPlate('pintoBunda','dick2butt',1,1,1,1,'butt+dick',0.5,55.99)
+print getMenu()
+deletePlate('hamburger')
+print getMenu()
 
 
 

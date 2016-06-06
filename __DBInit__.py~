@@ -15,12 +15,16 @@ c.execute("""CREATE TABLE menu(dish_name varchar primary key,
 			       vegetarian integer,
 			       lactose integer,
 			       type string,
-			       discount float)
+			       discount float,
+			       price float)
                                """)
 
+
+
 #exemplos / dados iniciais
-c.execute("""INSERT INTO menu VALUES ('pizza','uma pizza hmmm...',1,1,1,1,'principal',50)""")
-c.execute("""INSERT INTO menu VALUES ('hamburger','uma pizza hmmm...',1,0,0,1,'principal',50)""")
+c.execute("""INSERT INTO menu VALUES ('pizza','uma pizza hmmm...',1,1,1,1,'principal',50,40)""")
+c.execute("""INSERT INTO menu VALUES('pintoBunda','dickbutt',1,1,1,1,'butt+dick',0.500000,55.990000)""")
+c.execute("""INSERT INTO menu VALUES ('hamburger','uma pizza hmmm...',1,0,0,1,'principal',50,40)""")
 
 ##INICIA ESTRUTURA DE DADOS PEDIDO: Contem ID de Pedido e Status
 
