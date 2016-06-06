@@ -1,7 +1,6 @@
 import sqlite3
-
-class SQLTableAlterationError(Exception):
-    pass	
+import SQLExceptions
+	
 
 conn = sqlite3.connect('exemple.db')
 c = conn.cursor()
@@ -29,9 +28,6 @@ def insertDish(dish_name, description, gluten, vegan, vegetarian, lactose,
 	pass
 
 def deleteDish(dish_name):
-	if dish_name not in c.execute("""SELECT dish_name FROM menu WHERE '%s'==
-				      dish_name"""):
-		raise SQLTableAlterationError("Pedido nao pode ser deletado")
 	row = c.execute("""DELETE FROM menu WHERE '%s'==dish_name"""
 		  %(dish_name))
 	conn.commit()
