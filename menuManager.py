@@ -1,4 +1,7 @@
-import sqlite3	
+import sqlite3
+
+class SQLTableAlterationError(Exception):
+    pass	
 
 conn = sqlite3.connect('exemple.db')
 c = conn.cursor()
@@ -17,7 +20,7 @@ def getMenu():
 		 
 
 
-def insertPlate(dish_name, description, gluten, vegan, vegetarian, lactose, 
+def insertDish(dish_name, description, gluten, vegan, vegetarian, lactose, 
 							type_, discount,price):
 	row = c.execute("""INSERT INTO menu VALUES('%s','%s',%d,%d,%d,%d,'%s',%f,%f)"""
 		  %(dish_name, description, gluten, vegan, vegetarian, lactose,
@@ -25,20 +28,21 @@ def insertPlate(dish_name, description, gluten, vegan, vegetarian, lactose,
 	conn.commit()
 	pass
 
-def deletePlate(dish_name):
+def deleteDish(dish_name):
+	if dish_name not in c.execute("""SELECT dish_name FROM menu WHERE '%s'==
+				      dish_name"""):
+		raise SQLTableAlterationError("Pedido nao pode ser deletado")
 	row = c.execute("""DELETE FROM menu WHERE '%s'==dish_name"""
 		  %(dish_name))
 	conn.commit()
-	pass
 
 
 
 
 
-#insertPlate('pintoBunda','dick2butt',1,1,1,1,'butt+dick',0.5,55.99)
-print getMenu()
-deletePlate('hamburger')
-print getMenu()
+
+
+
 
 
 
