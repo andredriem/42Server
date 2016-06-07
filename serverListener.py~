@@ -62,9 +62,9 @@ while True:
 		try:
 			orderManager.changeOrderStatus(parameters[0],parameters[1])
 			client_connection.send('ok\n') #REVISAR MENSAGEM QUE DEVE SER O RETORNO
-			#print "insertOrder of " + parameters[0] + " successful"
+			#print "changeOrderStatus of " + parameters[0] + " successful"
 		except SQLTableInserionError:
 			client_connection.send('error\n') #REVISAR MENSAGEM QUE DEVE SER O RETORNO
-			#print "insertOrder of " + parameters[0] + " error"
+			#print "changeOrderStatus of " + parameters[0] + " error"
 
 

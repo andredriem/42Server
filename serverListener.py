@@ -4,7 +4,7 @@ essa classe conecta o back end com o front end
 
 import socket
 import menuManager
-import orderManagerDB as orderManager
+import orderManager
 import SQLExceptions
 
 menuManager.getMenu()
