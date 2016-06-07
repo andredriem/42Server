@@ -40,9 +40,9 @@ def deleteDish(dish_name):
 		conn.commit()
 	else:
 		raise SQLExceptions.SQLTableDeletionError("Dish was not in table")
+	pass
 
-print getMenu()
-deleteDish('pizza')
+
 
 
 

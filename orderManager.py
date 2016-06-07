@@ -8,14 +8,17 @@ import SQLExceptions
 conn = sqlite3.connect('exemple.db')
 c = conn.cursor()
 
+
+#retorna id da nova ordem
 def insertOrder(table_no,status):
 	sql_string = """INSERT INTO restaurantOrder VALUES 
 		        (NULL,%d,'%s')"""%(table_no,status)
 	try:
-		c.execute(sql_string)
+		row = c.execute(sql_string)
 		conn.commit()
+		return c.lastrowid
 	except:
-		raise SQLTableInserionError
+		raise SQLExceptions.SQLTableInserionError
 	pass
 
 
@@ -31,9 +34,32 @@ def changeOrderStatus(order_id,status):
 				  order_id = order_id """)
 		conn.commit()
 	else:
-		raise SQLTableAlterationError("INVALID ID")
+		raise SQLExceptions.SQLTableAlterationError("INVALID ID")
+
+
+def addDishToOrder(order_id,dish,quantity,half_portion):
+	if type(half_portion) == type(True):
+		half_portion = int(half_portion)
+	try:
+		c.execute("""INSERT INTO orderedDishes VALUES(%d,'%s',%d,%d)"""
+			  %(order_id,dish,quantity,half_portion))
+	except:
+		raise SQLExceptions.SQLTableInserionError
+	pass
+
+
+def deleteAllDishesFromOrder(order_id):
+	c.execute("""DELETE FROM orderedDishes WHERE %d==order_id"""%(order_id))
+	##Se requisitado no futuro eu do raise em algo
+	pass
+
 		
 	
 
-insertOrder(1,'bla')
-changeOrderStatus(88,'hue')
+test = insertOrder(2,'ble')
+addDishToOrder(test,'hamburger',8000,False)
+addDishToOrder(test,'pizza',8001,True)
+print test
+deleteAllDishesFromOrder(test)
+
+
