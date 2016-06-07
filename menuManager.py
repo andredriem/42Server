@@ -1,5 +1,6 @@
 import sqlite3
 import SQLExceptions
+import unittest
 	
 
 conn = sqlite3.connect('exemple.db')
@@ -28,12 +29,20 @@ def insertDish(dish_name, description, gluten, vegan, vegetarian, lactose,
 	pass
 
 def deleteDish(dish_name):
-	row = c.execute("""DELETE FROM menu WHERE '%s'==dish_name"""
-		  %(dish_name))
-	conn.commit()
+	found = False
+	for a_id in c.execute("""SELECT dish_name FROM menu
+                                     WHERE '%s'==dish_name"""%(dish_name)):
+		if dish_name in a_id:
+			found = True
+	if found == True:
+		row = c.execute("""DELETE FROM menu WHERE '%s'==dish_name"""
+			  %(dish_name))
+		conn.commit()
+	else:
+		raise SQLExceptions.SQLTableDeletionError("Dish was not in table")
 
-
-
+print getMenu()
+deleteDish('pizza')
 
 
 
