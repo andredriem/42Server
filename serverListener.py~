@@ -4,6 +4,7 @@ essa classe conecta o back end com o front end
 
 import socket
 import menuManager
+import orderManagerDB as orderManager
 
 menuManager.getMenu()
 
@@ -35,11 +36,24 @@ while True:
         if function == 'getMenu':
                 menu = menuManager.getMenu()
                 client_connection.send(menu)
-        #elif function == 'insertDish':
-        #    try:
-                
-            
-        
-		#print type(request)
-		#print request
-		#client_connection.send(http_response)
+
+        elif function == 'insertDish':
+            	menuManager.insertDish(parameters[0], parameters[1], parameters[2], parameters[3], 
+					parameters[4], parameters[5], parameters[6])
+		client_connection.send('ok\n') #REVISAR MENSAGEM QUE DEVE SER O RETORNO
+		#print "insertDish of " + parameters[0] + " successful"
+
+	elif function == 'deleteDish':
+		menuManager.deleteDish(parameters[0])
+		client_connection.send('ok\n') #REVISAR MENSAGEM QUE DEVE SER O RETORNO
+		#print "deleteDish of " + parameters[0] + " successful"
+
+	elif function == 'insertOrder':
+		orderManager.insertOrder(parameters[0],parameters[1])
+		client_connection.send('ok\n') #REVISAR MENSAGEM QUE DEVE SER O RETORNO
+		#print "insertOrder of " + parameters[0] + " successful"
+
+	elif function == 'changeOrderStatus':
+		orderManager.changeOrderStatus(parameters[0],parameters[1])
+		client_connection.send('ok\n') #REVISAR MENSAGEM QUE DEVE SER O RETORNO
+		#print "changeOrderStatus of " + parameters[0] + " successful"
