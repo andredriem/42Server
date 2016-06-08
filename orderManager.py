@@ -1,13 +1,6 @@
 import sqlite3	
 import SQLExceptions
 
-
-
-
-
-
-
-
 #retorna id da nova ordem
 def insertOrder(table_no,status):
 	conn = sqlite3.connect('exemple.db')

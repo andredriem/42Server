@@ -1,9 +1,6 @@
 import sqlite3
 import SQLExceptions
 import unittest
-	
-
-
 
 def getMenu():
 # fetch 'em all

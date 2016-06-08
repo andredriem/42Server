@@ -1,7 +1,9 @@
 class SQLTableAlterationError(Exception):
     pass	
+
 class SQLTableInserionError(Exception):
-    pass	
+    pass
+	
 class SQLTableDeletionError(Exception):
     pass	
 
