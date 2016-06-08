@@ -17,7 +17,6 @@ def insertOrder(table_no,status):
 	try:
 		row = c.execute(sql_string)
 		conn.commit()
-		conn.close()
 		return c.lastrowid
 	except:
 		conn.close()

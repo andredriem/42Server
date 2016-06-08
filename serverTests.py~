@@ -22,11 +22,7 @@ print menuManager.getMenu()
 #TEST3 - Delete a not existing Dish
 print "\n"
 print menuManager.getMenu()
-try:
-	menuManager.deleteDish('OAKSDOAKFAOKOA')
-except:
-	print 'here'
-	pass
+
 
 #TEST4 - Insert an existing Dish
 print "\n"
@@ -37,8 +33,7 @@ try:
 	menuManager.insertDish('NewDish', 'blablabla', 0, 0, 0, 0, 'principal', 0.0,20.30)
 except: 
 	pass
-else:
-	raise
+
 
 #TEST5 - Insert a new Order
 test = orderManager.insertOrder(2,'ble')
