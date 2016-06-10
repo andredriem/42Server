@@ -32,23 +32,74 @@ print >>sys.stderr, 'sending "%s"' % message
 
 
 
-
+#ADICIONA PRATOS NAO APROVADOS PELA PETA NO CARDAPIO
 print sendData("""insertDish@['golfinhos','golpfhinhos frescos pescados de barcos
 		  japoneses','false','false','false','false','pescados',0.5,99.95]\n""")
 print sendData("""insertDish@['golfinhos2','golphinhos frescos pescados de barcos
 		  japoneses','false','false','false','false','pescados',0.5,99.95]\n""")
 print sendData("""insertDish@['golfinhos3','golphinhos frescos pescados de barcos
 		  japoneses','false','false','false','false','pescados',0.5,99.95]\n""")
+
+#EXIBE ELES
 print sendData("getMenu@\n")
+
+#INSERE UM REPITIDO PRA SIMULAR UM UPDATE (O CAMPO DE DESCRICAO FOI ALTERADO)
 print sendData("""insertDish@['golfinhos3','na verdade sao tubaroes frescos pescados de barcos
 		  japoneses','false','false','false','false','pescados',0.5,99.95]\n""")
 print sendData("getMenu@\n")
 
+
+#TESTA DELETE
 print sendData("deleteDish@['golfinhos3']\n")
 
 print sendData("getMenu@\n")
 
+
+#TESTA DELETE EM TODOS OS PRATOS DELETADO + DELETE EM PRATOS NAO EXISTENTES
 print sendData("deleteDish@['golfinhos3']\n")
+print sendData("deleteDish@['golfinhos2']\n")
+print sendData("deleteDish@['golfinhos1']\n")
+
+#EXIBE CARDAPIO QUE DEVERIA ESTAR COMO O ORIGINAL
+print sendData("getMenu@\n")
+
+
+#ADICIONA UM NOVO GOLFINHO PRA FUTUROS TESTES
+print sendData("""insertDish@['golfinhos','golpfhinhos frescos pescados de barcos
+		  japoneses','false','false','false','false','pescados',0.5,99.95]\n""")
+
+
+idorder = sendData("""sendOrder@[1]\n""")
+
+
+print sendData("""changeOrderStatus@[%d,'em preparo']\n"""%(int(idorder)))
+
+print sendData("""addDishToOrder@[%d,'pizza',2,1]\n"""%(int(idorder)))
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

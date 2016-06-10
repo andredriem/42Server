@@ -69,6 +69,23 @@ print sendData("""insertDish@['golfinhos','golpfhinhos frescos pescados de barco
 		  japoneses','false','false','false','false','pescados',0.5,99.95]\n""")
 
 
+idorder = sendData("""sendOrder@[1]\n""")
+
+
+print sendData("""changeOrderStatus@[%d,'em preparo']\n"""%(int(idorder)))
+
+print sendData("""addDishToOrder@[%d,'pizza',2,1]\n"""%(int(idorder)))
+print sendData("""addDishToOrder@[%d,'golfinhos',2,1]\n"""%(int(idorder)))
+print sendData("""addDishToOrder@[%d,'hamburger',2,1]\n"""%(int(idorder)))
+
+
+
+print sendData("""ressetOrder@[%d]\n"""%(int(idorder)))
+
+
+
+
+
 
 
 

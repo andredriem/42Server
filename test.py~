@@ -1,0 +1,103 @@
+import SQLExceptions
+from menuManager import MenuManager
+from orderManager import OrderManager 
+
+class dummy:
+	def __init__(self):
+		self.dummy = 'dummy'
+		#conn = sqlite3.connect('exemple.db')
+		#c = conn.cursor()
+
+		menuDB = MenuManager('exemple.db')
+		orderDB = OrderManager('exemple.db')
+
+		#TEST1 - Insert a new Dish
+		print menuDB.getMenu()
+		menuDB.insertDish('NewDish', 'blablabla', 0, 0, 0, 0, 'principal', 0.0,20.30)
+		print menuDB.getMenu()
+
+		print "\nTEST 1 PASSED"
+
+		#TEST2 - Delete a existing Dish
+		print "\n"
+		print menuDB.getMenu()
+		menuDB.deleteDish('NewDish')
+		print menuDB.getMenu()
+
+		print "\nTEST 2 PASSED"
+
+		#TEST3 - Delete a not existing Dish
+		print "\n"
+		print menuDB.getMenu()
+		try:
+			menuDB.deleteDish('OAKSDOAKFAOKOA')
+		except SQLExceptions.SQLTableDeletionError:
+			pass
+		else:
+			raise Exception
+
+		print "\nTEST 3 PASSED"
+
+		#TEST4 - Insert an existing Dish
+		print "\n"
+		print menuDB.getMenu()
+		menuDB.insertDish('NewDish2', 'blablabla', 0, 0, 0, 0, 'principal', 0.0,20.30)
+		print menuDB.getMenu()
+		try:
+			menuDB.insertDish('NewDish2', 'blablabla', 0, 0, 0, 0, 'principal', 0.0,20.30)
+		except: 
+			pass
+		else:
+			raise
+
+		print "\nTEST 4 PASSED"
+
+		#TEST5 - Insert a new Order
+		test = orderDB.insertOrder(2,'ble')
+		orderDB.addDishToOrder(test,'hamburger',8000,False)
+		orderDB.addDishToOrder(test,'pizza',8001,True)
+		print test
+
+		print "\nTEST 5 PASSED"
+
+		#TEST6 - Change an Order Status of an existing Order
+		orderDB.changeOrderStatus(2,'bla')
+
+		print "\nTEST 6 PASSED"
+
+		#TEST7 - Change an Order Status of a not existing Order:
+		try:
+			orderDB.changeOrderStatus(2,'bla')
+		except:
+			pass
+		else:
+			raise
+
+		print "\nTEST 7 PASSED"
+
+		#TEST8 - Try to add an already existing Dish in an Order
+		try:
+			orderDB.addDishToOrder(test,'hamburger',8000,False)
+		except SQLExceptions.SQLTableAlterationError:
+			pass
+		else:
+			raise
+
+		print "\nTEST 8 PASSED"
+
+		#TEST9 - Add Dish to a not existing order
+		orderDB.deleteAllDishesFromOrder(test)
+		try:
+			orderDB.addDishToOrder(test,'pizza',8001,True)
+		except SQLExceptions.SQLTableInserionError:
+			pass
+		else: 
+			raise
+
+		print "\nTEST 9 PASSED"
+		print "\nALL TESTS PASSED :)"
+
+
+
+
+a = dummy()

@@ -3,6 +3,7 @@ import SQLExceptions
 
 #retorna id da nova ordem
 def insertOrder(table_no,status):
+	table_no = int(table_no)
 	conn = sqlite3.connect('exemple.db')
 	c = conn.cursor()
 	sql_string = """INSERT INTO restaurantOrder VALUES 
@@ -20,6 +21,9 @@ def insertOrder(table_no,status):
 
 
 def changeOrderStatus(order_id,status):
+
+	order_id = int(order_id)
+	print order_id
 	conn = sqlite3.connect('exemple.db')
 	c = conn.cursor()
 	found = False
@@ -39,6 +43,9 @@ def changeOrderStatus(order_id,status):
 
 
 def addDishToOrder(order_id,dish,quantity,half_portion):
+	order_id = int(order_id)
+	quantity = int(quantity)
+	half_portion = int(half_portion)
 	conn = sqlite3.connect('exemple.db')
 	c = conn.cursor()
 	if type(half_portion) == type(True):
@@ -54,6 +61,8 @@ def addDishToOrder(order_id,dish,quantity,half_portion):
 
 
 def deleteAllDishesFromOrder(order_id):
+
+	order_id = int(order_id)
 	conn = sqlite3.connect('exemple.db')
 	c = conn.cursor()
 	c.execute("""DELETE FROM orderedDishes WHERE %d==order_id"""%(order_id))
@@ -61,8 +70,8 @@ def deleteAllDishesFromOrder(order_id):
 	conn.close()
 	pass
 
-		
-	
+
+
 
 
 

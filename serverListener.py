@@ -66,22 +66,47 @@ while True:
 		#print "deleteDish of " + parameters[0] + " successful"
 
 	elif function == 'sendOrder':
+		
 		try:
-			orderManager.insertOrder(parameters[0],parameters[1])
-			client_connection.send('ok\n') #REVISAR MENSAGEM QUE DEVE SER O RETORNO
+			print parameters[0]
+			return_value = orderManager.insertOrder(parameters[0][1:-1],'solicitado')
 			#print "insertOrder of " + parameters[0] + " successful"
-		except SQLTableInserionError:
-			client_connection.send('error\n') #REVISAR MENSAGEM QUE DEVE SER O RETORNO
-			#print "insertOrder of " + parameters[0] + " error"
+		except:
+			client_connection.send('false\n')
+		else:
+			client_connection.send(str(return_value)+'\n')
+	
+		
+		#print "insertOrder of " + parameters[0] + " error"
 
 	elif function == 'changeOrderStatus':
 		try:
-			orderManager.changeOrderStatus(parameters[0],parameters[1])
-			client_connection.send('ok\n') #REVISAR MENSAGEM QUE DEVE SER O RETORNO
+			orderManager.changeOrderStatus(parameters[0][1:],parameters[1][1:-2])
 			#print "changeOrderStatus of " + parameters[0] + " successful"
-		except SQLTableInserionError:
-			client_connection.send('error\n') #REVISAR MENSAGEM QUE DEVE SER O RETORNO
+		except:
+			client_connection.send('false\n') #REVISAR MENSAGEM QUE DEVE SER O RETORNO
 			#print "changeOrderStatus of " + parameters[0] + " error"
+		else:
+			client_connection.send('true\n')
+	elif function == 'addDishToOrder':
+		try:
+			orderManager.addDishToOrder(parameters[0][1:],parameters[1][1:1],parameters[2],parameters[3][:-1])
+			#print "changeOrderStatus of " + parameters[0] + " successful"
+		except:
+			client_connection.send('false\n') #REVISAR MENSAGEM QUE DEVE SER O RETORNO
+			#print "changeOrderStatus of " + parameters[0] + " error"
+		else:
+			client_connection.send('true\n')
+
+	elif function == 'ressetOrder':
+
+		try:
+			orderManager.deleteAllDishesFromOrder(parameters[0][1:-1])
+		except:
+			client_connection.send('false\n') #REVISAR MENSAGEM QUE DEVE SER O RETORNO
+		else:
+				client_connection.send('true\n')
+		#print "deleteDish of " + parameters[0] + " successful"
 
 
 
