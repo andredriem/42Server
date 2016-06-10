@@ -4,7 +4,7 @@ essa classe conecta o back end com o front end
 
 import socket
 import menuManager
-import orderManagerDB as orderManager
+import orderManager
 import SQLExceptions
 
 menuManager.getMenu()
@@ -21,10 +21,13 @@ print 'Serving HTTP on port %s ...' % PORT
 
 
 while True:
+	print 'start iteration'
 	client_connection, client_address = listen_socket.accept()
 	request = client_connection.recv(1024)
 	while '\n' not in request:
 		 request += client_connection.recv(1024)
+
+	print request
 	if not request:
 		client_connection.close()
 		print 'conexao terminada'
@@ -32,21 +35,34 @@ while True:
                 function = request.split('@')[0]
                 tam = len(function)
                 parameters = request[tam+1:-1]
-                parameters = parameters.split("','")
-
+                parameters = parameters.split(",")
+		print parameters
+	print function
         if function == 'getMenu':
                 menu = menuManager.getMenu()
-                client_connection.send(menu)
+		
+                client_connection.send(menu+'\n')
 
         elif function == 'insertDish':
-            	menuManager.insertDish(parameters[0], parameters[1], parameters[2], parameters[3], 
-					parameters[4], parameters[5], parameters[6])
-		client_connection.send('ok\n') #REVISAR MENSAGEM QUE DEVE SER O RETORNO
+		try:
+		    	menuManager.insertDish(parameters[0][2:-1],
+			parameters[1][1:-1], parameters[2][1:-1],
+		        parameters[3][1:-1],parameters[4][1:-1],
+			parameters[5][1:-1], parameters[6][1:-1],
+			parameters[7],parameters[8][:-1])
+		except:
+			client_connection.send('false\n')
+		else:
+			client_connection.send('true\n') #REVISAR MENSAGEM QUE DEVE SER O RETORNO
 		#print "insertDish of " + parameters[0] + " successful"
 
 	elif function == 'deleteDish':
-		menuManager.deleteDish(parameters[0])
-		client_connection.send('ok\n') #REVISAR MENSAGEM QUE DEVE SER O RETORNO
+		try:
+			menuManager.deleteDish(parameters[0][2:-2])
+		except:
+			client_connection.send('false\n') #REVISAR MENSAGEM QUE DEVE SER O RETORNO
+		else:
+			client_connection.send('true\n')
 		#print "deleteDish of " + parameters[0] + " successful"
 
 	elif function == 'insertOrder':
@@ -66,5 +82,13 @@ while True:
 		except SQLTableInserionError:
 			client_connection.send('error\n') #REVISAR MENSAGEM QUE DEVE SER O RETORNO
 			#print "changeOrderStatus of " + parameters[0] + " error"
+
+
+
+
+
+
+
+
 
 

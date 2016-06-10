@@ -21,16 +21,23 @@ def getMenu():
 
 def insertDish(dish_name, description, gluten, vegan, vegetarian, lactose, 
 							type_, discount,price):
-	try:
-		conn = sqlite3.connect('exemple.db')
-		c = conn.cursor()
-		row = c.execute("""INSERT INTO menu VALUES('%s','%s',%d,%d,%d,%d,'%s',%f,%f)"""
-			  %(dish_name, description, gluten, vegan, vegetarian, lactose,
-								 type_, discount,price))
-		conn.commit()
-		conn.close()
-	except:
-		conn.close()
+	gluten = int(bool(gluten))
+	vegan = int(bool(vegan))
+	vegetarian = int(bool(vegetarian))
+	lactose = int(bool(lactose))
+	print discount
+	discount= float(discount)
+	print price
+	price = float(price)
+	
+	conn = sqlite3.connect('exemple.db')
+	c = conn.cursor()
+	row = c.execute("""INSERT OR REPLACE INTO menu VALUES('%s','%s',%d,%d,%d,%d,'%s',%f,%f)"""
+		  %(dish_name, description, gluten, vegan, vegetarian, lactose,
+							 type_, discount,price))
+	conn.commit()
+	conn.close()
+
 	pass
 
 def deleteDish(dish_name):
