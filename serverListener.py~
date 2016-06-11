@@ -90,7 +90,7 @@ while True:
 			client_connection.send('true\n')
 	elif function == 'addDishToOrder':
 		try:
-			orderManager.addDishToOrder(parameters[0][1:],parameters[1][1:1],parameters[2],parameters[3][:-1])
+			orderManager.addDishToOrder(parameters[0][1:],parameters[1][1:-1],parameters[2],parameters[3][:-1])
 			#print "changeOrderStatus of " + parameters[0] + " successful"
 		except:
 			client_connection.send('false\n') #REVISAR MENSAGEM QUE DEVE SER O RETORNO
@@ -99,14 +99,20 @@ while True:
 			client_connection.send('true\n')
 
 	elif function == 'ressetOrder':
-
-	try:
-		orderManager.deleteAllDishesFromOrder(parameters[0][1:-1])
-	except:
-		client_connection.send('false\n') #REVISAR MENSAGEM QUE DEVE SER O RETORNO
-	else:
-			client_connection.send('true\n')
-		#print "deleteDish of " + parameters[0] + " successful"
+		try:
+			orderManager.deleteAllDishesFromOrder(parameters[0][1:-1])
+		except:
+			client_connection.send('false\n') #REVISAR MENSAGEM QUE DEVE SER O RETORNO
+		else:
+				client_connection.send('true\n')
+	elif function == 'getOrder':
+		try:
+			return_value = orderManager.getOrder(parameters[0][1:-1])
+		except:
+			client_connection.send(return_value + '\n') #REVISAR MENSAGEM QUE DEVE SER O RETORNO
+		else:
+				client_connection.send('true\n')
+	
 
 
 

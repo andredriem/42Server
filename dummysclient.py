@@ -17,7 +17,6 @@ def sendData(string):
 
 	while '\n' not in data:
 		data += sock.recv(2024)
-
 	return data 
 
 
@@ -78,64 +77,8 @@ print sendData("""addDishToOrder@[%d,'pizza',2,1]\n"""%(int(idorder)))
 print sendData("""addDishToOrder@[%d,'golfinhos',2,1]\n"""%(int(idorder)))
 print sendData("""addDishToOrder@[%d,'hamburger',2,1]\n"""%(int(idorder)))
 
-
-
-print sendData("""ressetOrder@[%d]\n"""%(int(idorder)))
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+print sendData("""getOrder@[%d]\n"""%(int(idorder)))
+print sendData("""Order@[%d]\n"""%(int(idorder)))
 
 
 

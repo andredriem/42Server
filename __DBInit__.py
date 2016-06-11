@@ -54,7 +54,7 @@ c.execute("""INSERT INTO orderedDishes VALUES (0,'hamburger',2,1)""")
 
 
 
-
+conn.commit()
 conn.close()
 #c.execute ("""SELECT * FROM menu""")
 #print c.fetchone()
