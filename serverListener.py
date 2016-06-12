@@ -43,7 +43,7 @@ while True:
 		
                 client_connection.send(menu+'\n')
 
-        elif function == 'insertDish':
+        elif function == 'insertDish' or function == 'updateDish':
 		try:
 		    	menuManager.insertDish(parameters[0][2:-1],
 			parameters[1][1:-1], parameters[2][1:-1],
