@@ -96,6 +96,41 @@ def getOrder(order_id):
 	conn.close()
 	return return_string
 
+def getOrderPrice(order_id):
+	order_id = int(order_id)
+	conn = sqlite3.connect('exemple.db')
+	c = conn.cursor()
+	rows = c.execute ("""SELECT sum(quantity*price) FROM orderedDishes,menu
+			     WHERE order_id == %d and orderedDishes.dish_name == menu.dish_name"""%(order_id))
+	return_string = ""
+	for row in rows:
+		return_string = return_string + str(row) 
+	conn.commit()
+	conn.close()
+	return "["+return_string[1:-2]+"]"
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

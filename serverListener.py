@@ -112,6 +112,13 @@ while True:
 			client_connection.send('false\n') #REVISAR MENSAGEM QUE DEVE SER O RETORNO
 		else:
 			client_connection.send(return_value + '\n')
+	elif function == 'getOrderPrice':
+		try:
+			return_value = orderManager.getOrderPrice(parameters[0][1:-1])
+		except:
+			client_connection.send('false\n') #REVISAR MENSAGEM QUE DEVE SER O RETORNO
+		else:
+			client_connection.send(return_value + '\n')
 	
 
 
