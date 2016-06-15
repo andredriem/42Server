@@ -43,7 +43,7 @@ while True:
 		
                 client_connection.send(menu+'\n')
 
-        elif function == 'insertDish':
+        elif function == 'insertDish' or function == 'updateDish':
 		try:
 		    	menuManager.insertDish(parameters[0][2:-1],
 			parameters[1][1:-1], parameters[2][1:-1],
@@ -109,9 +109,23 @@ while True:
 		try:
 			return_value = orderManager.getOrder(parameters[0][1:-1])
 		except:
-			client_connection.send(return_value + '\n') #REVISAR MENSAGEM QUE DEVE SER O RETORNO
+			client_connection.send('false\n') #REVISAR MENSAGEM QUE DEVE SER O RETORNO
 		else:
-				client_connection.send('true\n')
+			client_connection.send(return_value + '\n')
+	elif function == 'getOrderPrice':
+		try:
+			return_value = orderManager.getOrderPrice(parameters[0][1:-1])
+		except:
+			client_connection.send('false\n') #REVISAR MENSAGEM QUE DEVE SER O RETORNO
+		else:
+			client_connection.send(return_value + '\n')
+	elif function == 'getOrderInfo':
+		try:
+			return_value = orderManager.getOrderInfo(parameters[0][1:-1])
+		except:
+			client_connection.send('false\n') #REVISAR MENSAGEM QUE DEVE SER O RETORNO
+		else:
+			client_connection.send(return_value + '\n')
 	
 
 

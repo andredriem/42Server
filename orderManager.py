@@ -110,9 +110,18 @@ def getOrderPrice(order_id):
 	return "["+return_string[1:-2]+"]"
 
 
-
-
-
+def getOrderInfo(order_id):
+	order_id = int(order_id)
+	conn = sqlite3.connect('exemple.db')
+	c = conn.cursor()
+	rows = c.execute("""SELECT * FROM restaurantOrder
+                                     WHERE %d==order_id"""%(order_id))
+	return_string = ""
+	for row in rows:
+		return_string+= str(row)
+	conn.commit()
+	conn.close()
+	return ('['+ return_string[1:-1] + ']')
 
 
 
