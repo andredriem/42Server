@@ -127,11 +127,6 @@ def getOrderInfo(order_id):
 
 
 
-n = insertOrder(22,'preparo')
-print getOrderInfo(41)
-
-
-
 
 
 

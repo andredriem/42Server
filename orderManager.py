@@ -34,7 +34,7 @@ def changeOrderStatus(order_id,status):
 	if found == True:
 		#	raise SQLExceptions.SQLTableAlterationError("id not found")
 		c.execute("""UPDATE restaurantOrder SET status = '%s' WHERE
-				  order_id = order_id """)
+				  order_id = order_id """%(status))
 		conn.commit()
 	else:
 		conn.close()
